@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { TratamientosService } from './tratamientos.service';
 import { Tratamiento } from './dtos/tratamiento.entity';
@@ -6,10 +7,15 @@ import { diskStorage } from 'multer';
 import * as fs from 'fs';
 import { extname } from 'path';
 import { FileInterceptor } from '@nestjs/platform-express';
+=======
+import { Controller } from '@nestjs/common';
+import { TratamientosService } from './tratamientos.service';
+>>>>>>> 0d4bb5140643cb909f37cd1e4dce11fd7e1a2150
 
 @Controller('tratamientos')
 export class TratamientosController {
   constructor(private readonly tratamientosService: TratamientosService) {}
+<<<<<<< HEAD
 
   // ===========================================================
   // TRATAMIENTOS
@@ -173,3 +179,6 @@ export class TratamientosController {
     return this.tratamientosService.deleteLogicEspecialidad(id);
   }
 }
+=======
+}
+>>>>>>> 0d4bb5140643cb909f37cd1e4dce11fd7e1a2150

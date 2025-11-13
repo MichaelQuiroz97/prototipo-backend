@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Cliente } from './dtoCliente/cliente_entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -105,6 +105,30 @@ export class ClientesService {
     return this.clienteRepository.findOne({ where: { Correo: correo } });
   }
 
+   /**
+   * Valida correo y contraseña 
+   * Retorna el cliente si son correctos, o lanza excepción si no lo son
+   */
+  async loginLocal(correo: string, password: string): Promise<Cliente> {
+    const cliente = await this.findByEmail(correo);
+
+    if (!cliente) {
+      throw new UnauthorizedException('Correo o contraseña incorrectos.');
+    }
+
+    // Comparación directa de texto plano
+    if (cliente.PasswordHash !== password) {
+      throw new UnauthorizedException('Correo o contraseña incorrectos.');
+    }
+
+    // Actualizar último acceso
+    cliente.UltimoAcceso = new Date();
+    await this.clienteRepository.save(cliente);
+
+    // No retornar la contraseña
+    //delete (cliente as any).PasswordHash;
+    return cliente;
+  }
 
   // ============================================================
   //  CRUD ROLES

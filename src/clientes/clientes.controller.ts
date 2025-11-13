@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UnauthorizedException } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './dtoCliente/cliente_entity';
 import { Rol } from './dtoCliente/rol_entity';
@@ -58,6 +58,19 @@ export class ClientesController {
     @Body('cedula') cedula: string,
   ): Promise<Cliente> {
     return this.clienteService.updateCedula(id, cedula);
+  }
+
+  @Post('login')
+  async loginLocal(
+    @Body() body: { correo: string; password: string },
+  ): Promise<Cliente> {
+    const { correo, password } = body;
+
+    if (!correo || !password) {
+      throw new UnauthorizedException('Debe ingresar correo y contraseña.');
+    }
+
+    return this.clienteService.loginLocal(correo, password);
   }
 
   // ================================================================

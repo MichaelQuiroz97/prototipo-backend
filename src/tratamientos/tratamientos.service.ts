@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Tratamiento } from './dtos/tratamiento.entity';
 import { Repository } from 'typeorm';
@@ -180,3 +181,9 @@ export class TratamientosService {
     return { message: `Especialidad ${id} eliminada lógicamente` };
   }
 }
+=======
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class TratamientosService {}
+>>>>>>> 0d4bb5140643cb909f37cd1e4dce11fd7e1a2150
